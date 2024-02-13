@@ -55,4 +55,25 @@
 .top-bar-button {
   position: absolute;
   right: 10px;
+  width: 50px;  /* Add this line */
+  height: 50px; /* Add this line */
+}
+
+.user-profile {
+  position: absolute;
+  left: 10px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+  gap: 10px; /* Adjust the gap between grid items as needed */
+  padding-top: 60px; /* To account for the fixed top bar */
+
+}
+
+.grid-item {
+  background-color: #ddd; /* Just for demonstration, adjust as needed */
+  padding: 20px; /* Just for demonstration, adjust as needed */
+  border:  1px solid black;
 }
