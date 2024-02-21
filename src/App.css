@@ -76,4 +76,32 @@
   background-color: #ddd; /* Just for demonstration, adjust as needed */
   padding: 20px; /* Just for demonstration, adjust as needed */
   border:  1px solid black;
+  font-size: 64;
+}
+
+.game-board {
+  display: flex; /* Change from grid to flex */
+  flex-direction: column; /* Add this line */
+  gap: 10px;
+  padding-top: 60px;
+}
+
+.game-board-row {
+  background-color: gray;
+  padding: 20px;
+  border: 1px solid black;
+  font-size: 64;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-board-cell {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid black;
+  font-size: 64;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
