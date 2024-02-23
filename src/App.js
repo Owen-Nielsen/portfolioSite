@@ -1,179 +1,98 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import './config/firebase.js';
+import {words} from './words.js';
 
 function App() {
 
-  const guessesLeft = 5;
-  let word = "";
 
-  const words = ["space", "title"];
+  var guessesLeft = 5;
+  var guessesUsed = 0;
+  let word = "";
+  var row = 0;
+  var col= 0;
+
+
 
   const getWords = async () => {
     
-    const num =Math.floor(Math.random() * 2);
+    var num =Math.floor(Math.random() * 2);
 
      word = words[num];
 
   }
 
-  window.onload = getWords();
+  const resetBoxes = async () => {
+    var guessesLeft = 5;
+    var guessesUsed = 0;
+    let word = "";
+
+      var row = 0;
+    var col= 0;
+
+
+    for(row = 1; row < 6; row++){
+      for(col = 1; col < 6; col++){
+        document.getElementById("1." + col).style.backgroundColor = "white";
+        document.getElementById("1." + col).ariaReadOnly = true;
+      }
+    }
+    
+  };
+
+  const Reset = async () => {
+    resetBoxes();
+    getWords();
+  };
+
+  
 
   
 
   const Submit = async () => {
     console.log("Submit button clicked");
-    if(guessesLeft === 5){
-      let result1 =document.getElementById("1.1").value.toLowerCase();
-      let result2 =document.getElementById("1.2").value.toLowerCase();
-      let result3 =document.getElementById("1.3").value.toLowerCase();
-      let result4 =document.getElementById("1.4").value.toLowerCase();
-      let result5 =document.getElementById("1.5").value.toLowerCase();
+  
 
-      if(result1 === word[0]){
-        document.getElementById("1.1").style.backgroundColor = "green";
-      }
-      if(result2 === word[1]){
-        document.getElementById("1.2").style.backgroundColor = "green";
-      }
-      if(result3 === word[2]){
-        document.getElementById("1.3").style.backgroundColor = "green";
-      }
-      if(result4 === word[3]){
-        document.getElementById("1.4").style.backgroundColor = "green";
-      }
-      if(result5 === word[4]){
-        document.getElementById("1.5").style.backgroundColor = "green";
-      }
-      
-      document.getElementById("1.1").readOnly = true;
-      document.getElementById("1.2").readOnly = true;
-      document.getElementById("1.3").readOnly = true;
-      document.getElementById("1.4").readOnly = true;
-      document.getElementById("1.5").readOnly = true;
-    }
-    else if(guessesLeft === 4){
-      let result1 =document.getElementById("2.1").value.toLowerCase();
-      let result2 =document.getElementById("2.2").value.toLowerCase();
-      let result3 =document.getElementById("2.3").value.toLowerCase();
-      let result4 =document.getElementById("2.4").value.toLowerCase();
-      let result5 =document.getElementById("2.5").value.toLowerCase();
 
-      if(result1 === word[0]){
-        document.getElementById("2.1").style.backgroundColor = "green";
-      }
-      if(result2 === word[1]){
-        document.getElementById("2.2").style.backgroundColor = "green";
-      }
-      if(result3 === word[2]){
-        document.getElementById("2.3").style.backgroundColor = "green";
-      }
-      if(result4 === word[3]){
-        document.getElementById("2.4").style.backgroundColor = "green";
-      }
-      if(result5 === word[4]){
-        document.getElementById("2.5").style.backgroundColor = "green";
-      }
-      
-      document.getElementById("2.1").readOnly = true;
-      document.getElementById("2.2").readOnly = true;
-      document.getElementById("2.3").readOnly = true;
-      document.getElementById("2.4").readOnly = true;
-      document.getElementById("2.5").readOnly = true;
-    }
 
-    else if(guessesLeft === 3){
-      let result1 =document.getElementById("3.1").value.toLowerCase();
-      let result2 =document.getElementById("3.2").value.toLowerCase();
-      let result3 =document.getElementById("3.3").value.toLowerCase();
-      let result4 =document.getElementById("3.4").value.toLowerCase();
-      let result5 =document.getElementById("3.5").value.toLowerCase();
 
-      if(result1 === word[0]){
-        document.getElementById("3.1").style.backgroundColor = "green";
+      for(col = 1; col < 6; col++){
+        var cell = document.getElementById(row + "." + col);
+        if(cell.value === word.charAt(col-1) && cell.value !== "" ){
+          cell.style.backgroundColor = "green";
+          cell.ariaReadOnly = true;
+        }
+        
+        else if(word.includes(cell.value) && cell.value !== null ){
+          cell.style.backgroundColor = "yellow";
+          cell.ariaReadOnly = true;
+        }
+        else if(cell.value !== null){
+          cell.style.backgroundColor = "red";
+          cell.ariaReadOnly = true;
+        }
       }
-      if(result2 === word[1]){
-        document.getElementById("3.2").style.backgroundColor = "green";
-      }
-      if(result3 === word[2]){
-        document.getElementById("3.3").style.backgroundColor = "green";
-      }
-      if(result4 === word[3]){
-        document.getElementById("3.4").style.backgroundColor = "green";
-      }
-      if(result5 === word[4]){
-        document.getElementById("3.5").style.backgroundColor = "green";
-      }
-      
-      document.getElementById("3.1").readOnly = true;
-      document.getElementById("3.2").readOnly = true;
-      document.getElementById("3.3").readOnly = true;
-      document.getElementById("3.4").readOnly = true;
-      document.getElementById("3.5").readOnly = true;
-    }
-    else if(guessesLeft === 2){
-      let result1 =document.getElementById("4.1").value.toLowerCase();
-      let result2 =document.getElementById("4.2").value.toLowerCase();
-      let result3 =document.getElementById("4.3").value.toLowerCase();
-      let result4 =document.getElementById("4.4").value.toLowerCase();
-      let result5 =document.getElementById("4.5").value.toLowerCase();
+    
+    
 
-      if(result1 === word[0]){
-        document.getElementById("4.1").style.backgroundColor = "green";
+      for(col = 1; col < 6; col++){
+        if(guessesUsed === row){
+          document.getElementById(row + "." + col).ariaReadOnly = true;
+          var nextRow = row + 1;
+          document.getElementById(nextRow + "." + col).ariaReadOnly = false;
+        }
       }
-      if(result2 === word[1]){
-        document.getElementById("4.2").style.backgroundColor = "green";
-      }
-      if(result3 === word[2]){
-        document.getElementById("4.3").style.backgroundColor = "green";
-      }
-      if(result4 === word[3]){
-        document.getElementById("4.4").style.backgroundColor = "green";
-      }
-      if(result5 === word[4]){
-        document.getElementById("4.5").style.backgroundColor = "green";
-      }
-      
-      document.getElementById("4.1").readOnly = true;
-      document.getElementById("4.2").readOnly = true;
-      document.getElementById("4.3").readOnly = true;
-      document.getElementById("4.4").readOnly = true;
-      document.getElementById("4.5").readOnly = true;
-    }
-    else if(guessesLeft === 1){
-      let result1 =document.getElementById("5.1").value.toLowerCase();
-      let result2 =document.getElementById("5.2").value.toLowerCase();
-      let result3 =document.getElementById("5.3").value.toLowerCase();
-      let result4 =document.getElementById("5.4").value.toLowerCase();
-      let result5 =document.getElementById("5.5").value.toLowerCase();
+    
 
-      if(result1 === word[0]){
-        document.getElementById("5.1").style.backgroundColor = "green";
-      }
-      if(result2 === word[1]){
-        document.getElementById("5.2").style.backgroundColor = "green";
-      }
-      if(result3 === word[2]){
-        document.getElementById("5.3").style.backgroundColor = "green";
-      }
-      if(result4 === word[3]){
-        document.getElementById("5.4").style.backgroundColor = "green";
-      }
-      if(result5 === word[4]){
-        document.getElementById("5.5").style.backgroundColor = "green";
-      }
-      
-      document.getElementById("5.1").readOnly = true;
-      document.getElementById("5.2").readOnly = true;
-      document.getElementById("5.3").readOnly = true;
-      document.getElementById("5.4").readOnly = true;
-      document.getElementById("5.5").readOnly = true;
-    }
-    if(guessesLeft === 0){
-      alert("You are out of guesses");
-    }
+    
+
+  
+
 
     guessesLeft = guessesLeft - 1;
+    guessesUsed = guessesUsed + 1;
+    row = row + 1;
+    col = col + 1;
   }
 
 
@@ -232,6 +151,7 @@ function App() {
         </div>
         <div className="game-board-row">
           <button className="game-board-cell" onClick={Submit}>Submit</button>
+          <button className="game-board-cell" onClick={Reset}>Reset</button>
         </div>
       </div>
     </div>
