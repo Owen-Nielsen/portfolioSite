@@ -4,6 +4,8 @@ import './config/firebase.js';
 import {words} from './words.js';
 import { onLog } from 'firebase/app';
 
+
+
 function App() {
 
   var guessesLeft = 5;
@@ -11,6 +13,7 @@ function App() {
   let word = "";
   var row = 1;
   var col= 0;
+  
 
   
 
@@ -26,15 +29,18 @@ function App() {
     var guessesUsed = 0;
     let word = "";
 
-      var row = 0;
-    var col= 0;
+
 
     for(row = 1; row < 6; row++){
       for(col = 1; col < 6; col++){
-        document.getElementById("1." + col).style.backgroundColor = "white";
-        document.getElementById("1." + col).ariaReadOnly = true;
+        document.getElementById(row + "."+ col).style.backgroundColor = "white";
+        document.getElementById(row +"."+ col).ariaReadOnly = true;
+        document.getElementById(row +"."+ col).value = "";
       }
     }
+
+    row = 1;
+    col = 0;
     
   };
 
